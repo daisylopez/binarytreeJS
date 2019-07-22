@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+	<title>Movie Database</title>
+</head>
+<body>
+	<h1>Movie Database</h1>
+	<p>Binary Tree in Javascript</p>
+
+
+	<script type="text/javascript">
+		// create a database for movies using a binary search tree
+		// the database should be sorted alphabetically (the minimum are numbers and/or a, and z is the max)
+		// has a MovieTree object which serves as the blueprint of all the movies
+		// has a MovieTree object which serves as the blueprint of each movie
+		// has a rootNode which sits on top of the tree and serves as the node being compared to every time a new movie is added
+		// has an addMovie method which adds a movie and sorts whether the passed in value should go to the left or right mode
+		// has a min method for MovieNode which traverses the leftNode of MovieNode to find the minimum value (alphabetically)
+		// has a max method for MovieNode which traverses the rightNode of MovieNode to find the maximum value (alphabetically)
+
+
+	
+function moviesDB(string) {
+		this.value = string;
+		this.rootNode = string;
+		this.left = undefined;
+		this.right = undefined;
+
+		this.add = function(string) {
+			movieList = [rootNode];
+			movieList.push(string);
+
+			for (let num = 0; num < movieList.length; num++) {
+				movieList.sort();
+			}
+
+			if(string < this.value) {
+					if(this.left == undefined) {
+						this.left = new moviesDB(string);
+						return string;
+					} else {
+						this.left.add(string);
+					}
+			} else if(string > this.value) {
+					if(this.right== undefined) {
+						this.right = new moviesDB(string);
+						return string;
+					} else{
+						this.right.add(string);
+					}
+			} 
+		} //end of add function 
+
+		this.inOrder = function() { // print out strings nuymerically and alphabetically. 
+			if(this.left != undefined) {
+				this.left.inOrder();
+			}
+			console.log(this.value);
+			if(this.right != undefined){
+				this.right.inOrder();
+			}
+		} // end of inOrder
+
+
+		this.postOrder = function() { // this function allows to print out numbers in order
+			
+			if(this.left != undefined) {
+				this.left.postOrder();
+			}
+		
+			if(this.right != undefined){
+				this.right.postOrder();
+			}
+			console.log(this.value);
+		}	// end of postOrder
+		this.min = function() { //this function allows you to find the MIN number
+			if (this.left == undefined) return this.value;
+			return this.left.min(); //smallest number in binary tree
+		}
+
+		this.max = function() { //this function allows you to find the MAX number
+			if (this.right == undefined) return this.value;
+			return this.right.max(); //largest number in binary tree
+			}
+		} // end of NODE function
+
+		
+	let rootNode = new moviesDB("John Wick"); // topmost parent node. Children will branch out starting here.
+
+	// Tests 
+	rootNode.add('While You Were Sleeping');
+
+	rootNode.add('Constantine');
+	rootNode.add('Sherlock Holmes');
+
+	rootNode.add('Mad Max');
+	rootNode.add('Upgrade');
+	rootNode.add('Terminator');
+	rootNode.add('Venom');
+
+	console.log("MIN movie: " + rootNode.min());
+	console.log("MAX movie: " + rootNode.max());
+	
+
+	</script>
+</body>
+</html>
+
+

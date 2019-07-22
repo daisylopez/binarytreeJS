@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+	<title>Binary Search Trees</title>
+</head>
+<body>
+	<h1>Binary Search Trees</h1>
+
+
+	<script type="text/javascript">
+		// function Node(num) {
+		// 	this.value = num;
+		// 	this.left = undefined;
+		// 	this.right = undefined;
+		// }
+
+// =====================
+// Solution #1 - While
+// =====================
+// function Bst(node) {
+// 	this.rootNode = node;
+// 	this.add = function(num) {
+// 		let currentNode = this.rootNode;
+// 		while(currentNode) {
+// 			if(num < currentNode.value) {
+// 				if(!currentNode.left) {
+// 					currentNode.left = new Node(num);
+// 					break;
+// 				} else {
+// 					currentNode = currentNode.left;
+// 				}
+// 			} else if(num > currentNode.value) {
+// 				if(!currentNode.right) {
+// 					currentNode.right = new Node(num);
+// 					break;
+// 				} else{
+// 					currentNode = currentNode.right;
+// 				}
+// 			} else {
+// 	          console.log("Try Different Value");
+// 	          break;
+// 			} 
+// 		}//end of while
+// 	}//end of add function
+// }//end of Bst function
+// ===================
+// END of Solution #1 
+// ===================
+
+
+// =======================
+// Solution #2 - Do While
+// =======================
+// function Bst(node) {
+// 			this.rootNode = node;
+// 			this.add = function(num) {
+// 				let currentNode = this.rootNode;
+// 				do {
+// 					if(num < currentNode.value) {
+// 						if(currentNode.left == undefined) {
+// 							currentNode.left = new Node(num);
+// 							currentNode = currentNode.left;
+// 						} else {
+// 							currentNode = currentNode.left;
+// 						}
+// 					} else if(num > currentNode.value) {
+// 						if(currentNode.right== undefined) {
+// 							currentNode.right = new Node(num);
+// 							currentNode = currentNode.right;
+// 						} else{
+// 							currentNode = currentNode.right;
+// 						}
+// 					} 
+// 				}//end of do
+// 				while (currentNode.value !=num);
+// 	}//end of add function
+// }//end of Bst function
+// ===================
+// END of Solution #2 
+// ===================
+
+
+
+// ===============================
+// Solution #3 - Recursive method
+// ===============================
+// function Bst(node) {
+// 	this.rootNode = node;
+// 	this.add = function(num) {
+// 		let currentNode = this.rootNode;
+// 		function insert(currentNode) {
+// 			if(num < currentNode.value) {
+// 				if(currentNode.left == undefined) {
+// 					currentNode.left = new Node(num);
+// 					return;
+// 				} else {
+// 					return insert(currentNode.left);
+// 				}
+// 			} else if(num > currentNode.value) {
+// 				if(currentNode.right== undefined) {
+// 					currentNode.right = new Node(num);
+// 					return;
+// 				} else{
+// 					return insert(currentNode.right);
+// 				}
+// 			} 
+// 		} // end of insert function
+// 		insert(currentNode);
+// 	}//end of add function
+// }//end of Bst function
+// ===================
+// END of Solution #3 
+// ===================
+
+
+		//let rootNode = new Node(8);
+		// let tree = new Bst(rootNode);
+
+// ========================
+// Tests for Bst function
+// ========================
+	// tree.add(3);
+	// tree.add(10);
+	// tree.add(1);
+	// tree.add(6);
+	// tree.add(14);
+	// tree.add(4);
+	// tree.add(7);
+	// tree.add(13);
+
+
+	//==============
+	// Solution #4
+	//==============
+	function Node(num) {
+		this.value = num;
+		this.left = undefined;
+		this.right = undefined;
+
+
+		this.add = function(num) { // this function adds a new node in a tree with a value data
+			if(num < this.value) {
+					if(this.left == undefined) {
+						this.left = new Node(num);
+						return num;
+					} else {
+						this.left.add(num);
+					}
+				} else if(num > this.value) {
+					if(this.right== undefined) {
+						this.right = new Node(num);
+						return num;
+					} else{
+						this.right.add(num);
+					}
+				} 
+		} //end of add function 
+
+		this.find = function(num) { //this function searches the node with a value data in the entire tree.
+			if(this.value == num) return true;
+			if (num < this.value) {
+				if(this.left == undefined) return false;
+				return this.left.find(num)
+			}else if (num > this.value){
+				if(this.right == undefined) return false;
+				return this.right.find(num)
+			}
+			// return true if num exists
+			// return false if num does not exist
+		} // end of find function
+
+		this.min = function() { //this function searches for a node with a minimum value starting from node.
+			if (this.left == undefined) return this.value;
+			return this.left.min(); //smallest number in binary tree
+		}
+
+		this.max = function() { //this function It searches for a node with a maximum value starting from node.
+			if (this.right == undefined) return this.value;
+			return this.right.max(); //largest number in binary tree
+		}
+
+		this.inOrder = function() { //this function performs inorder traversal of a tree starting from a given node
+			//Algo for InOrder
+			// - Traverse the left subtree i.e perform inorder on left subtree
+			// - Visit the root
+			// - Traverse the right subtree i.e perform inorder on right subtree
+			if(this.left != undefined) {
+				this.left.inOrder();
+			}
+			console.log(this.value);
+			if(this.right != undefined){
+				this.right.inOrder();
+			}
+		} // end of inOrder
+
+		this.preOrder = function() { // this function performs preorder traversal of a tree starting from a given node.
+			// Algo for preOrder
+			// - Visit the root
+			// - Traverse the left subtree i.e perform inorder on left subtree
+			//- Traverse the right subtree i.e perform inorder on right subtree
+			console.log(this.value);
+			if(this.left != undefined) {
+				this.left.preOrder();
+			}
+		
+			if(this.right != undefined){
+				this.right.preOrder();
+			}
+		}	// end of preOrder
+
+		this.postOrder = function() { // this function performs postorder traversal of a tree starting from a given node.
+			// Algo for postOrder
+			// - Traverse the left subtree i.e perform inorder on left subtree
+			// -Traverse the right subtree i.e perform inorder on right subtree
+			// - Visit the root
+			
+			if(this.left != undefined) {
+				this.left.postOrder();
+			}
+		
+			if(this.right != undefined){
+				this.right.postOrder();
+			}
+			console.log(this.value);
+		}	// end of postOrder
+
+
+		this.remove = function(num) { // this function removes a node with a given data.
+			
+
+			if(this.left!=undefined && this.left.value == num) {
+				if(hasNoChildren(this.left)){
+					this.left = undefined;
+					return num;
+				}
+				if(this.left.left){
+					if(hasOneChild(this.left)){		
+					this.left=this.left.left;	// comment out
+						return num; }					// comment out
+				}
+				if(this.left.right){
+					if(hasOneChild(this.left)){		
+					this.left=this.left.right;	// comment out
+						return num; }					// comment out
+				}
+				if(hasTwoChildren(this.left)) {	// comment out
+					let temp = this.left.right.min();
+					this.left.remove(this.left.right.min());
+					this.left.value = temp;
+					return "You qwerty " + num;
+				}
+
+				if(hasTwoChildren(this.right)) {	// comment out
+					let temp = this.right.right.min();
+					this.right.remove(this.right.right.min());
+					this.right.value = temp;
+					return "You qwerty " + num;
+				}
+			} 
+
+			if (this.right!=undefined && this.right.value == num) {
+				if(hasNoChildren(this.right)){
+					this.right =undefined;
+					return num;
+				}
+				if(this.right.right) {
+					if(hasOneChild(this.right)){
+						this.right=this.right.right;		
+						return num; 
+					}					
+				}
+				if(this.right.left) {
+					if(hasOneChild(this.right))
+					{
+						this.right=this.right.left;		
+						return num; 
+					}					
+				}
+
+				if(hasTwoChildren(this.left)) {	// comment out
+					let temp = this.left.right.min();
+					this.left.remove(this.left.right.min());
+					this.left.value = temp;
+					return "You qwerty " + num;
+				}
+
+				if(hasTwoChildren(this.right)) {	// comment out
+					let temp = this.right.right.min();
+					this.right.remove(this.right.right.min());
+					this.right.value = temp;
+					return "You qwerty " + num;
+				}
+			}  
+
+			if(num < this.value) {
+				return this.left.remove(num);
+			} 
+			if (num > this.value) {
+				return this.right.remove(num);
+			}
+
+			function hasNoChildren(node) {
+				if(node.left == undefined && node.right == undefined) {
+					return true;
+				} else {
+					return false;
+				}
+			} // end of hasNoChildren function
+
+			function hasOneChild(node) {
+				if((node.left != undefined && node.right == undefined) || (node.left == undefined && node.right != undefined)) {
+					return true;
+				} else {
+					return false;
+				}
+			} // end of hasOneChild function
+
+			function hasTwoChildren(node) { 
+				if(node.left != undefined && node.right != undefined) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			} // end of hasTwoChildren function
+		}	// end of remove function
+
+	}// end of node function
+
+
+        
+	// create an object for the BinarySearchTree 
+	let rootNode = new Node(8); // topmost parent node
+
+	//Children
+	// Tests for adding a leaf
+	rootNode.add(3);
+	rootNode.add(10);
+	rootNode.add(1);
+	rootNode.add(6);
+	rootNode.add(14);
+	rootNode.add(4);
+	rootNode.add(7);
+	rootNode.add(13);
+	console.log(rootNode);
+
+	// Tests for finding a value
+	console.log("4 exists? " + rootNode.find(4));
+	console.log("5 exists? " + rootNode.find(5));
+
+	// // Test for finding minimum number
+	// console.log(rootNode.min());
+	
+	// // Test for finding minimum number
+	// console.log(rootNode.max());
+
+	// // Prints out numbers in order
+	// console.log(rootNode.inOrder());
+
+	// // Prints out numbers in pre-order
+	// console.log(rootNode.preOrder());
+
+	// // Prints out numbers in post-order
+	// console.log(rootNode.postOrder());
+
+	// Prints out numbers in post-order
+	// console.log(rootNode.remove(3));
+
+
+	</script>
+</body>
+</html>
